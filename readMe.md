@@ -1,11 +1,11 @@
 1. Version Info:
-    - v0.1.1
+    - v0.1.2
 
 2. Features:
-    - Expanded upgrade & research system
-        - 10 click & auto upgrades
-        - 3 research upgrades
-        - dynamically create elements and event listener from upgrade and research arrays
+    - Save file is now deletable
+    - Automatic saving (every 10s)
+    - fixed save games to work with the expanded u&r system
+    - automatic loading of save game on stratup 
 
 3. Planned features till v0.2.0:
     - Scalability of the Game
@@ -20,6 +20,11 @@
             - Customized Upgrade Names
 
 4. Version History:
+    - v0.1.1:
+        - Expanded upgrade & research system
+            - 10 click & auto upgrades
+            - 3 research upgrades
+            - dynamically create elements and event listener from upgrade and research arrays
     - v0.1.0:
         - Basic upgrade & research system
             - 1 click & auto upgrade

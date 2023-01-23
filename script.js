@@ -274,11 +274,23 @@ function save() {
     totalScore,
     incrementPower,
     incrementPerSec,
+    costReduction,
     upgrades,
     researches,
   ];
   localStorage.setItem("save data", JSON.stringify(saveGame));
-  console.log("Game saved!")
+  console.log("Game saved!");
+}
+
+/**
+ * Automatically saves the game every 10 secounds
+ */
+const autoSave = setInterval(save, 10000);
+
+// Clear save
+function deleteSave() {
+  localStorage.removeItem("save data");
+  console.log("Save removed!");
 }
 
 /**
@@ -291,15 +303,16 @@ function load() {
     totalScore = parseInt(saveData[1]);
     incrementPower = parseInt(saveData[2]);
     incrementPerSec = parseInt(saveData[3]);
+    costReduction = parseInt(saveData[4])
     let loadedUpgrades = [];
-    for (let upgradeData of saveData[4]) {
+    for (let upgradeData of saveData[5]) {
       let upgrade = new Upgrade(upgradeData.name, upgradeData.cost, upgradeData.power, upgradeData.count);
       loadedUpgrades.push(upgrade);
     }
     upgrades = loadedUpgrades;
 
     let loadedResearches = [];
-    for (let researchData of saveData[5]) {
+    for (let researchData of saveData[6]) {
       let research = new Research(researchData.name, researchData.cost, researchData.power, researchData.count, researchData.type);
       loadedResearches.push(research);
     }
@@ -309,6 +322,7 @@ function load() {
     console.log("No save data found.");
   }
 }
+
 
 // Simple upgradeCost calculation
 function upgradeCost(cost, div, count, costReduction) {
@@ -328,7 +342,6 @@ const increment = setInterval(autoIncrement, 1000);
 function autoIncrement() {
   score += incrementPerSec;
   totalScore += incrementPerSec;
-  console.log("incre ps");
 }
 
 /**
@@ -343,4 +356,9 @@ incrementButton.addEventListener("click", function () {
 const saveButton = document.getElementById("save");
 saveButton.addEventListener("click", function () {
   save();
+});
+
+const deleteSaveButton = document.getElementById("deleteSave");
+deleteSaveButton.addEventListener("click", function () {
+  deleteSave();
 });
