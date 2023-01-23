@@ -134,21 +134,14 @@ function displayResearches() {
 }
 
 
-
-
-
-
-
 const reloadUI = setInterval(function () {
-  updateUI();
-}, 100);
-
-function updateUI() {
   scoreElement.innerHTML = "Score: " + score;
   totalScoreElement.innerHTML = "Total Score: " + totalScore;
   incrementScoreElement.innerHTML = "Points per Increment: " + incrementPower;
   incrementPerSecScoreElement.innerHTML = "Increment Per Secound: " + incrementPerSec;
-}
+  displayUpgrades();
+  displayResearches();
+}, 100);
 
 /**
  * Saving
