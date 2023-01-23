@@ -1,0 +1,118 @@
+:root {
+  --text-color: #D49B54;
+  --button-color: #46244C;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #46244C;
+}
+
+nav ul{height:14vh; width:100%;}
+nav ul{overflow:hidden; overflow-y:scroll;}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-gap: 10px;
+}
+
+.upgrades,
+.clicking-area,
+.research,
+.settings-and-saving,
+.score,
+.psUpgrades {
+  background-color: #712B75;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px #C74B50;
+  color: var(--text-color);
+}
+
+h1 {
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+h2 {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+h3 {
+  margin: 0;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+  color: var(--text-color)
+}
+
+button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: var(--text-color);
+}
+
+button:hover {
+  background-color: #C74B50;
+  cursor: pointer;
+}
+
+button:disabled, button[disabled] {
+  background-color: black;
+  text-decoration:line-through;
+}
+
+button:active {
+  background-color: #C74B50;
+  box-shadow: 0 5px #D49B54;
+  transform: translateY(4px);
+}
+
+.upgrades {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.clicking-area {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.research {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.settings-and-saving {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.score {
+  grid-column: 2;
+  grid-row: 2;
+  text-align: center;
+}
+
+.psUpgrades {
+  grid-column: 1;
+  grid-row: 2;
+}
