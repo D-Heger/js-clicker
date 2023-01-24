@@ -16,47 +16,54 @@ let totalScore = 0;
 let incrementPower = 1;
 let incrementPerSec = 0;
 let costReduction = 0;
+const gameVersion = "0.1.3";
 
 // Get elements
 const scoreElement = document.getElementById("score");
 const totalScoreElement = document.getElementById("totalScore");
 const incrementScoreElement = document.getElementById("incrementScore");
 const incrementPerSecScoreElement = document.getElementById("incrementPerSecScore");
+const gameVersionElement = document.getElementById("gameVersion");
+gameVersionElement.innerHTML = gameVersion;
+
+
 
 
 /**
  * Upgrade System
  */
 class Upgrade {
-  constructor(name, cost, power, count) {
+  constructor(name, cost, power, count, type, tier) {
     this.name = name;
     this.cost = cost;
     this.power = power;
     this.count = count;
+    this.type = type;
+    this.tier = tier;
   }
 }
 
 let upgrades = [
-  new Upgrade("Click Upgrade 1", 10, 1, 0),
-  new Upgrade("Click Upgrade 2", 100, 5, 0),
-  new Upgrade("Click Upgrade 3", 1000, 10, 0),
-  new Upgrade("Click Upgrade 4", 2500, 20, 0),
-  new Upgrade("Click Upgrade 5", 10000, 50, 0),
-  new Upgrade("Click Upgrade 6", 50000, 100, 0),
-  new Upgrade("Click Upgrade 7", 99999, 900, 0),
-  new Upgrade("Click Upgrade 8", 1000000, 1337, 0),
-  new Upgrade("Click Upgrade 9", 1050505, 5987, 0),
-  new Upgrade("Click Upgrade 10", 100000000, 10001, 0),
-  new Upgrade("Auto Upgrade 1", 100, 1, 0),
-  new Upgrade("Auto Upgrade 2", 500, 2, 0),
-  new Upgrade("Auto Upgrade 3", 1000, 5, 0),
-  new Upgrade("Auto Upgrade 4", 5000, 9, 0),
-  new Upgrade("Auto Upgrade 5", 10000, 14, 0),
-  new Upgrade("Auto Upgrade 6", 50000, 20, 0),
-  new Upgrade("Auto Upgrade 7", 100000, 100, 0),
-  new Upgrade("Auto Upgrade 8", 500000, 555, 0),
-  new Upgrade("Auto Upgrade 9", 100000, 1337, 0),
-  new Upgrade("Auto Upgrade 10", 5000000, 9999, 0),
+  new Upgrade("Baby Steps", 10, 1, 0, "C", 1),
+  new Upgrade("Bigger Steps", 100, 5, 0, "C", 1),
+  new Upgrade("Why Steps?", 1000, 10, 0, "C", 1),
+  new Upgrade("Mighty Steps", 2500, 20, 0, "C", 1),
+  new Upgrade("Isn't it supposed to be clicks?", 10000, 50, 0, "C", 1),
+  new Upgrade("No, i mean really?", 50000, 100, 0, "C", 1),
+  new Upgrade("Whats the point?", 99999, 900, 0, "C", 1),
+  new Upgrade("My hand hurts", 1000000, 1337, 0, "C", 1),
+  new Upgrade("What is this?", 1050505, 5987, 0, "C", 1),
+  new Upgrade("Upgrade 10", 100000000, 10001, 0, "C", 1),
+  new Upgrade("Automation", 100, 1, 0, "A", "1"),
+  new Upgrade("Slightly better automation", 500, 2, 0, "A", "1"),
+  new Upgrade("Even better automation", 1000, 5, 0, "A", "1"),
+  new Upgrade("This is almost as good as any other incremental game", 5000, 9, 0, "A", "1"),
+  new Upgrade("Wow the button over me really made this game worse!", 10000, 14, 0, "A", "1"),
+  new Upgrade("Does this guy think he is funny?", 50000, 20, 0, "A", "1"),
+  new Upgrade("Play Factorio", 100000, 100, 0, "A", "1"),
+  new Upgrade("Why isnt this more effective?", 500000, 555, 0, "A", "1"),
+  new Upgrade("Wow funny hacker number", 100000, 1337, 0, "A", "1"),
+  new Upgrade("Its over 900!q", 5000000, 9999, 0, "A", "1"),
 ];
 
 function purchaseUpgrade(upgradeName) {
@@ -66,9 +73,9 @@ function purchaseUpgrade(upgradeName) {
         score -= upgrade.cost;
         upgrade.count += 1;
         upgrade.cost = upgradeCost(upgrade.cost, 10, upgrade.count, costReduction);
-        if (upgrade.name.includes("Click")) {
+        if (upgrade.type.includes("C")) {
           incrementPower += upgrade.power;
-        } else if (upgrade.name.includes("Auto")) {
+        } else if (upgrade.type.includes("A")) {
           incrementPerSec += upgrade.power;
         }
         break;
@@ -128,9 +135,9 @@ function createUpgradeElements() {
   let aUpgradeList = document.getElementById("autoUpgradeList");
   for (let upgrade of upgrades) {
     let upgradeElement = createUpgradeElement(upgrade);
-    if (upgrade.name.includes("Click")) {
+    if (upgrade.type.includes("C")) {
       cUpgradeList.appendChild(upgradeElement);
-    } else if (upgrade.name.includes("Auto")) {
+    } else if (upgrade.type.includes("A")) {
       aUpgradeList.appendChild(upgradeElement);
     }
 
@@ -277,6 +284,7 @@ function save() {
     costReduction,
     upgrades,
     researches,
+    gameVersion,
   ];
   localStorage.setItem("save data", JSON.stringify(saveGame));
   console.log("Game saved!");
@@ -298,7 +306,7 @@ function deleteSave() {
  */
 function load() {
   let saveData = JSON.parse(localStorage.getItem("save data"));
-  if (saveData) {
+  if (saveData[7] === gameVersion) {
     score = parseInt(saveData[0]);
     totalScore = parseInt(saveData[1]);
     incrementPower = parseInt(saveData[2]);
@@ -318,6 +326,8 @@ function load() {
     }
     researches = loadedResearches;
     console.log("Game loaded!");
+  } else if (saveData) {
+    alert("Save was found, but not loaded because of a game update. Check the git to see what changed.")
   } else {
     console.log("No save data found.");
   }
@@ -326,7 +336,7 @@ function load() {
 
 // Simple upgradeCost calculation
 function upgradeCost(cost, div, count, costReduction) {
-  return Math.ceil((cost + ((cost / div) + count) * (count * 1.025)) - (10 * costReduction));
+  return Math.ceil((cost + (cost*2)/div)+(costReduction/count));
 }
 
 // Simple researchCost calculation
@@ -361,4 +371,5 @@ saveButton.addEventListener("click", function () {
 const deleteSaveButton = document.getElementById("deleteSave");
 deleteSaveButton.addEventListener("click", function () {
   deleteSave();
+  document.location.reload();
 });

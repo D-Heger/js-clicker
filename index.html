@@ -3,22 +3,36 @@
 
 <head>
   <title>Incremental Game</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" async></script>
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="scripts/script.js" async></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
   <h1>Incremental Game</h1>
-  <h3>v0.1.2</h3>
+  <h3 id="gameVersion">v0.1.0</h3>
   <div class="grid-container">
     <div class="upgrades">
       <h2>Upgrades</h2>
-      <nav><ul id="clickUpgradeList"></ul></nav>
+      <!--
+        Planned Tab Structure 
+        button class tablink tier1 onclick openTab event tier1
+        button class tablink tier2
+        button class tablink tier3
+        ...
+        Planned Tab Content Structure
+        div id tier1 class tabcontent 
+          <nav><ul id="clickUpgradeList"></ul></nav>
+      -->
+      <nav>
+        <ul id="clickUpgradeList"></ul>
+      </nav>
     </div>
     <div class="psUpgrades">
       <h2>Per Secound Upgrades</h2>
-      <nav><ul id="autoUpgradeList"></ul></nav>
+      <nav>
+        <ul id="autoUpgradeList"></ul>
+      </nav>
     </div>
     <div class="clicking-area">
       <h2>Clicking Area</h2>
@@ -26,7 +40,9 @@
     </div>
     <div class="research">
       <h2>Research</h2>
-      <nav><ul id="researchList"></ul></nav>
+      <nav>
+        <ul id="researchList"></ul>
+      </nav>
     </div>
     <div class="settings-and-saving">
       <h2>Settings & Saving</h2>
